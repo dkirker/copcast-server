@@ -20,7 +20,7 @@ module.exports = {
           type: Sequelize.INTEGER
         },
         plugged: {
-          type: Sequelize.BOOLEAN
+          type: Sequelize.INTEGER
         },
         temperature: {
           type: Sequelize.INTEGER
