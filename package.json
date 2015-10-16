@@ -20,7 +20,7 @@
     "grunt-forever": "~0.4.1",
     "jade": "^1.9.2",
     "jwt-simple": "^0.3.0",
-    "lodash": "~2.4.1",
+    "lodash": "~3.10.1",
     "method-override": "2.3.3",
     "mime": "1.2.x",
     "mkdirp": "0.5.x",
