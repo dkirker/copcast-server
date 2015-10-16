@@ -61,6 +61,8 @@ app.use(require('./lib/videos'));
 app.use(require('./lib/locations'));
 app.use(require('./lib/histories'));
 app.use(require('./lib/groups'));
+app.use(require('./lib/heartbeats'));
+app.use(require('./lib/batteries'));
 app.use(require('./lib/pictures'));
 
 streams = require('./lib/streams/streams.js')();
