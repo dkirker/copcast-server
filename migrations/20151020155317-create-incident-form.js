@@ -14,6 +14,9 @@ module.exports = {
       date: {
         type: Sequelize.DATE
       },
+      address: {
+        type: Sequelize.STRING
+      },
       lat: {
         type: Sequelize.FLOAT
       },
