@@ -13,6 +13,12 @@ module.exports = {
         date: {
           type: Sequelize.DATE
         },
+        lat : {
+          type : Sequelize.FLOAT
+        },
+        lng : {
+          type : Sequelize.FLOAT
+        },
         userId: {
           type: Sequelize.BIGINT,
           references: {
