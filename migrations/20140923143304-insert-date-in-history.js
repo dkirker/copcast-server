@@ -5,12 +5,13 @@ module.exports = {
           'date',
           DataTypes.DATE
       ).then(function () {
-              migration.migrator.query("update histories as h set date = h.\"createdAt\"");
+              migration.sequelize.query("update histories as h set date = h.\"createdAt\"");
               done();
           });
   },
   down: function(migration, DataTypes, done) {
-    migration.removeColumn('histories', 'date');
-    done()
+    migration.removeColumn('histories', 'date').then(function() {
+      done();
+    });
   }
 }
