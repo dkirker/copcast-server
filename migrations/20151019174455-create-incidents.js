@@ -23,7 +23,6 @@ module.exports = {
 
       }
     ).then(function() {
-        console.log(queryInterface.models);
         done();
       });
   },
