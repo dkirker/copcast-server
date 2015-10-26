@@ -46,7 +46,7 @@ Next, setup your configuration files. Copy the following files from lib/config/t
 
 Now edit the connection string and enter your database parameters, like _username_, _password_, _database_ and _host_ in "development.json".
 
-Next, initialize your database:
+Next, at the project root, initialize your database:
 
 ```
 psql -U username -f copcast-db.sql
