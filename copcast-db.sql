@@ -92,10 +92,7 @@ CREATE TABLE groups (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
-    "isAdmin" boolean,
-    lat double precision,
-    lng double precision
+    "updatedAt" timestamp with time zone NOT NULL
 );
 
 
@@ -121,43 +118,6 @@ CREATE SEQUENCE groups_id_seq
 ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
 
 
---
--- TOC entry 175 (class 1259 OID 16402)
--- Name: histories; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE histories (
-    id integer NOT NULL,
-    "createdAt" timestamp with time zone,
-    "updatedAt" timestamp with time zone,
-    "previousState" character varying(255),
-    "nextState" character varying(255),
-    "userId" bigint,
-    date timestamp with time zone
-);
-
-
---
--- TOC entry 176 (class 1259 OID 16408)
--- Name: histories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE histories_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- TOC entry 2278 (class 0 OID 0)
--- Dependencies: 176
--- Name: histories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE histories_id_seq OWNED BY histories.id;
-
 
 --
 -- TOC entry 177 (class 1259 OID 16410)
@@ -169,12 +129,7 @@ CREATE TABLE locations (
     date timestamp with time zone NOT NULL,
     lat double precision NOT NULL,
     lng double precision NOT NULL,
-    "userId" bigint,
-    accuracy double precision,
-    satellites integer,
-    provider character varying(255),
-    bearing double precision,
-    speed double precision
+    "userId" bigint
 );
 
 
@@ -219,8 +174,7 @@ CREATE TABLE users (
     "lastLocationUpdateDate" timestamp with time zone,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    "groupId" integer,
-    "profilePicture" character varying(255)
+    "groupId" integer
 );
 
 
@@ -275,12 +229,6 @@ ALTER TABLE ONLY "SequelizeMeta" ALTER COLUMN id SET DEFAULT nextval('"Sequelize
 ALTER TABLE ONLY groups ALTER COLUMN id SET DEFAULT nextval('groups_id_seq'::regclass);
 
 
---
--- TOC entry 2126 (class 2604 OID 16457)
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY histories ALTER COLUMN id SET DEFAULT nextval('histories_id_seq'::regclass);
 
 
 --
@@ -358,13 +306,7 @@ ALTER TABLE ONLY groups
     ADD CONSTRAINT groups_pkey PRIMARY KEY (id);
 
 
---
--- TOC entry 2139 (class 2606 OID 16441)
--- Name: histories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
 
-ALTER TABLE ONLY histories
-    ADD CONSTRAINT histories_pkey PRIMARY KEY (id);
 
 
 --
