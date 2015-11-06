@@ -53,6 +53,9 @@ module.exports = {
       useLethalForce: {
         type: Sequelize.BOOLEAN
       },
+      createdAt: {
+        type: Sequelize.DATE
+      },
       updatedAt: {
         type: Sequelize.DATE
       }
