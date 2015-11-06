@@ -63,6 +63,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    queryInterface.dropTable('incidentForms');
+    queryInterface.dropTable('incidentForm');
   }
 };
