@@ -34,22 +34,40 @@ npm install
 
 ## Database
 
-The server requires a PostgreSQL database. To prepare your development environment, edit the following files:
+The server requires a PostgreSQL database.
 
-   * lib/config/env/development.json
-   * config/config.json
+First, create 2 database users. One will be the owner of the database and user for administrative purposes, while the other, a less privileged one, will be used by the application. 
+As a placeholder, we will use "COPCASTADM" and "COPCASTUSER".
 
-For both, edit the connection string and enter your database parameters, like _username_, _password_, _database_ and _host_.
+Next, setup your configuration files. Copy the following files from lib/config/template to config/:
 
-Next, initialize your database:
+   * development.json
+   * common.json
+
+Now edit the connection string and enter your database parameters, like _username_, _password_, _database_ and _host_ in "development.json".
+
+Next, at the project root, initialize your database:
 
 ```
 psql -U username -f copcast-db.sql
-sequelize db:migrate:old_schema
-sequelize db:migrate
+sequelize db:migrate:old_schema --url 'postgres://COPCASTADM:PASSWORD@HOST:5432/DBNAME'
+sequelize db:migrate --url 'postgres://COPCASTADM:PASSWORD@HOST:5432/DBNAME'
 NODE_ENV=development node createAdminUser.js
 ```
 The last line will create your first user "admin" with the password "admin".
+
+
+## Cryptography
+
+The video files are encrypted before being stored. If you want to change the password or the salt, run the following script:
+
+```
+NODE_ENV=development node cryptoConfigGenerator.js
+```
+
+The output is a JSON fragment to be stored into "development.json".
+The number of partitions allows the password to be constructed from the input of multiple users, each having its own password.
+For production mode, it is advised to remove the "key" subsection under "crypto".
 
 
 ## Running
@@ -63,10 +81,10 @@ NODE_ENV=development node app.js
 
 ## Deployment
 
-1. Create a _production.json_ file at _/lib/config/env/_
-2. Set your database connection parameters.
-3. On the project root folder run your service with _forever_.
+1. Create a _production.json_ file at _config/_
+2. Set your database connection parameters and cryptography parameters (without the "key" entry).
+3. Run it (the passwords must be entered at the same order as previously configured):
 
 ```
-NODE_ENV=development forever -o /var/log/mogi-server.out -e /var/log/mogi-server.err start app.js
+NODE_ENV=production node app.js
 ```
