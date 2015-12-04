@@ -3,6 +3,7 @@ var groupName = "Cape Town",
     userName = 'admin',
     userEmail = 'user@email.com',
     userPass = 'admin'
+    role = 'admin_3',
     latitude = -33.920684,
     longitude = 18.425690;
 
@@ -15,11 +16,12 @@ group.save().then(function(group){
         username : userName,
         email : userEmail,
         name : userName,
+	role : role,
         groupId: group.id,
         isAdmin : admin
     });
 
     user.hashPassword(userPass, function() {
-        user.save().then(function() {process.exit();});
+        user.save().then(function() {process.exit();}).catch(function(err) {console.log(err);});
     });
-});
+}).catch(function(err) {console.log(err);});
