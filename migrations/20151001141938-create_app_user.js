@@ -1,8 +1,6 @@
 'use strict';
-//var copcast_db_user = require('../lib/db').sequelize.config.username;
-//var copcast_db_pass = require('../lib/db').sequelize.config.password;
-var copcast_db_user = "copcast";
-var copcast_db_pass = "copcast";
+var copcast_db_user = require('../lib/db').sequelize.config.username;
+var copcast_db_pass = require('../lib/db').sequelize.config.password;
 
 module.exports = {
   up: function (queryInterface, Sequelize, done) {
@@ -28,7 +26,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize, done) {
-
   queryInterface.sequelize.query("ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE SELECT,INSERT ON TABLES FROM "+copcast_db_user).then(function() {
     queryInterface.sequelize.query("ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE USAGE,SELECT ON SEQUENCES FROM "+copcast_db_user).then(function() {
       queryInterface.sequelize.query("REVOKE SELECT,INSERT,UPDATE ON ALL TABLES IN SCHEMA public FROM "+copcast_db_user).then(function() {
