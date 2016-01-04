@@ -20,8 +20,13 @@ db.sequelize.sync(option).then(function () {
           console.log('Consumer ready. Maximum parallel executions: '+config.rabbitmq.prefetchCount);
           q.subscribe({ack: true, prefetchCount: config.parallel_videos}, function (message, headers, deliveryInfo, ack) {
             try{
-              storage.ingestVideo(message.path, message.user.id, message.date, function() {
-                console.log(message.path);
+              console.log('Begining ingestion: '+message.path);
+              storage.ingestVideo(message.path, message.user.id, message.date, function(err, msg) {
+                if (!err)
+                  console.log(msg);
+                else
+                  console.log(err);
+
                 ack.acknowledge();
               });
             } catch(err) {
