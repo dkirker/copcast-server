@@ -5,6 +5,13 @@
   "googleApiKey" : "AIzaSyBz7uc4_GnOXaef9BIc7PEJmE8lxSQXEH0",
   "videoStorage" : "file",
   "configured" : false,
+  "wowza": {
+    "serverIpAddress": "",
+    "streamingPort": 1935,
+    "streamingUser": "",
+    "streamingPassword": "",
+    "streamingPath": ""
+  },
   "email":{
     "from":"Igarape <igarapetech@gmail.com>",
     "subject":"New Password",
