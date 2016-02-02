@@ -1,4 +1,5 @@
 'use strict';
+var copcast_db_user = require('../lib/db').sequelize.config.username;
 
 module.exports = {
   up: function (queryInterface, Sequelize, done) {
@@ -19,16 +20,33 @@ module.exports = {
         createdAt: {
           type: Sequelize.DATE,
           allowNull: false
+        },
+        username: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        ipaddress: {
+          type: Sequelize.STRING(16),
+          allowNull: false
         }
 
       }).then(function() {
-        done();
+        queryInterface.sequelize.query("GRANT SELECT,INSERT,UPDATE ON registrations TO "+copcast_db_user).then(function() {
+          done();
+          return null;
+        });
       });
+    return null;
   },
 
   down: function (queryInterface, Sequelize, done) {
+    done(); return null;
     queryInterface.dropTable('registrations').then(function () {
-      done();
-    })
+      queryInterface.sequelize.query("REVOKE SELECT,INSERT,UPDATE ON registrations FROM "+copcast_db_user).then(function() {
+        done();
+        return null;
+      });
+    });
+    return null;
   }
 }
