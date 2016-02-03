@@ -70,6 +70,7 @@ app.use(require('./lib/batteries'));
 app.use(require('./lib/incidentForms'))
 app.use(require('./lib/pictures'));
 app.use(require('./lib/logreports'));
+app.use(require('./lib/registrations'));
 
 streams = require('./lib/streams/streams.js')();
 
@@ -80,19 +81,25 @@ app.set('sockets', io.sockets);
 app.set('streams', streams);
 
 var option = {force: false};
-//if (process.env.NODE_ENV == "test"){
-//  option["force"] = true;
-//}
+
+var init_server = function() {
+  server.listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + app.get('port'));
+  });
+}
 
 db.sequelize.sync(option).then(function () {
-  //if (err) {
-  //  throw err;
-  //} else {
+
   crypto.crypto_init(function () {
-    rabbitmq.init(function () {
-      server.listen(app.get('port'), function () {
-        console.log('Express server listening on port ' + app.get('port'));
+
+    if ('rabbitmq' in config && config.rabbitmq.enabled) {
+
+      rabbitmq.init(function () {
+        init_server();
       });
-    });
+
+    } else {
+      init_server();
+    }
   });
 });
