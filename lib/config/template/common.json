@@ -5,6 +5,7 @@
   "googleApiKey" : "AIzaSyBz7uc4_GnOXaef9BIc7PEJmE8lxSQXEH0",
   "videoStorage" : "file",
   "configured" : false,
+  "clientUrl": "http://localhost:3001/",
   "wowza": {
     "serverIpAddress": "",
     "streamingPort": 1935,
