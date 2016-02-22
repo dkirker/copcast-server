@@ -69,6 +69,7 @@ app.use(require('./lib/batteries'));
 app.use(require('./lib/incidentForms'))
 app.use(require('./lib/pictures'));
 app.use(require('./lib/logreports'));
+app.use(require('./lib/exports'));
 
 streams = require('./lib/streams/streams.js')();
 
