@@ -19,5 +19,9 @@
     "user": "igarapetech@gmail.com",
     "pass": "igarape73",
     "template": "forgotPass"
+  },
+  "export":{
+    "subject": "Video export is ready",
+    "template": "export"
   }
 }
