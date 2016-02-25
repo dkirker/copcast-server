@@ -17,7 +17,8 @@ var express = require('express')
   , bodyParser = require('body-parser')
 //,	streams = require('./lib/streams/streams.js')();
   , rabbitmq = require('./lib/rabbitmq')
-  , crypto = require('./lib/crypto');
+  , crypto = require('./lib/crypto')
+  , wss = require('./lib/websocket')
 
 
 // Express configuration
@@ -81,6 +82,8 @@ app.set('sockets', io.sockets);
 app.set('streams', streams);
 
 var option = {force: false};
+
+wss.setupWebsockerServer(server);
 
 var init_server = function() {
   server.listen(app.get('port'), function () {
