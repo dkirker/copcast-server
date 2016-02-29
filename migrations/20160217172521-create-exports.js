@@ -22,7 +22,13 @@ module.exports = {
         finalDate: {
           type: Sequelize.DATE
         },
+        expireDate: {
+          type: Sequelize.DATE
+        },
         status: {
+          type: Sequelize.STRING
+        },
+        filepath: {
           type: Sequelize.STRING
         },
         createdAt: {
