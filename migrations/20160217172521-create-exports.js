@@ -31,6 +31,9 @@ module.exports = {
         filepath: {
           type: Sequelize.STRING
         },
+        filehash: {
+          type: Sequelize.STRING
+        },
         createdAt: {
           type: Sequelize.DATE
         },
