@@ -13,11 +13,10 @@
   "videoStorage": "file",
   "configured": true,
   "email": {
+    "administrator": "bruno@igarape.org.br",
     "from": "Igarape <igarapetech@gmail.com>",
-    "subject": "New Password",
     "service": "Gmail",
     "user": "igarapetech@gmail.com",
-    "pass": "igarape73",
-    "template": "forgotPass"
+    "pass": "igarape73"
   }
 }

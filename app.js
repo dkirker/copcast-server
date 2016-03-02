@@ -15,6 +15,7 @@ var express = require('express')
   , methodOverride = require('method-override')
   , errorHandler = require('errorhandler')
   , bodyParser = require('body-parser')
+  , exportUtils = require('./lib/exports/exportUtils.js')
   //,	streams = require('./lib/streams/streams.js')();
   , crypto = require('./lib/crypto')
 
@@ -69,6 +70,7 @@ app.use(require('./lib/batteries'));
 app.use(require('./lib/incidentForms'))
 app.use(require('./lib/pictures'));
 app.use(require('./lib/logreports'));
+app.use(require('./lib/exports'));
 
 streams = require('./lib/streams/streams.js')();
 
@@ -90,6 +92,9 @@ db.sequelize.sync(option).then(function() {
   crypto.crypto_init(function() {
     server.listen(app.get('port'), function () {
       console.log('Express server listening on port ' + app.get('port'));
+      exportUtils.loadExpireJobs();
     });
   });
 });
+
+
