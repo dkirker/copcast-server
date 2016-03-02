@@ -26,7 +26,7 @@ function correct(videos, i){
     correct(videos, i-1);
   } else {
     //if it does, check the metadata.
-    storage.getTotaDuration(video, function(duration){
+    storage.getTotalDuration(video, function(duration){
       console.log("new duration for video: "+duration+" - "+this.id);
       //include the metadata in the
       if (Math.ceil(duration) == 0){
