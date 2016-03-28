@@ -1,4 +1,5 @@
 'use strict';
+var copcast_db_user = require('../lib/db').sequelize.config.username;
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
@@ -42,7 +43,9 @@ module.exports = {
         }
       },
       {}
-    );
+    ).then(function() {
+      queryInterface.sequelize.query("GRANT SELECT,INSERT,UPDATE ON exports TO "+copcast_db_user);
+    });
   },
 
   down: function (queryInterface, Sequelize) {
