@@ -23,7 +23,7 @@ Then make sure you have the following softwares installed:
 
 
 <b>IMPORTANT:</b>
-use the version <b>2.6.5</b> of <b>ffmpeg</b>. We tested the version <b>2.6.8</b> and it generates several issues. We will test it with the version 3.x in the following months. 
+use the version <b>2.6.8</b> of <b>ffmpeg</b>. We will test it with the version 3.x in the following months. 
 
 ## Building
 
