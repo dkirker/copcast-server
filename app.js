@@ -83,7 +83,7 @@ app.set('streams', streams);
 
 var option = {force: false};
 
-wss.setupWebsockerServer(server);
+//wss.setupWebsockerServer(server);
 
 var init_server = function() {
   server.listen(app.get('port'), function () {
