@@ -15,8 +15,8 @@ var express = require('express')
   , methodOverride = require('method-override')
   , errorHandler = require('errorhandler')
   , bodyParser = require('body-parser')
-//,	streams = require('./lib/streams/streams.js')();
   , rabbitmq = require('./lib/rabbitmq')
+  , exportUtils = require('./lib/exports/exportUtils.js')
   , crypto = require('./lib/crypto')
   , wss = require('./lib/websocket')
 
@@ -72,6 +72,7 @@ app.use(require('./lib/incidentForms'))
 app.use(require('./lib/pictures'));
 app.use(require('./lib/logreports'));
 app.use(require('./lib/registrations'));
+app.use(require('./lib/exports'));
 
 streams = require('./lib/streams/streams.js')();
 
@@ -83,11 +84,10 @@ app.set('streams', streams);
 
 var option = {force: false};
 
-//wss.setupWebsockerServer(server);
-
 var init_server = function() {
   server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
+    exportUtils.loadExpireJobs();
   });
 }
 
@@ -106,3 +106,5 @@ db.sequelize.sync(option).then(function () {
     }
   });
 });
+
+
