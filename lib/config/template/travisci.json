@@ -4,5 +4,26 @@
   "db" : "postgres://postgres@localhost:5432/copcastdb_test",
   "googleApiKey" : "AIzaSyBz7uc4_GnOXaef9BIc7PEJmE8lxSQXEH0",
   "videoStorage" : "file",
-  "configured" : true
+  "configured" : true,
+  "crypto": {
+    "partitions": 3,
+    "key": "5wyv4fnn2czydg74vgywrm5hbg8s6t",
+    "challenge": "Elt/abz0ldFzGwDsQlKmWcZ8+wvEPdOPOIHPhwHtCy4=",
+    "salt": "7892393862398634875689"
+  },
+  "securestore": "/tmp",
+  "email": {
+    "administrator": "bruno@igarape.org.br",
+    "from": "Igarape <igarapetech@gmail.com>",
+    "service": "Gmail",
+    "user": "igarapetech@gmail.com",
+    "pass": "xxxx"
+  },
+  "wowza": {
+    "ipAddress": "localhost",
+    "port": 1935,
+    "user": "copcast",
+    "password": "xxxx",
+    "path": "live/"
+  }
 }
