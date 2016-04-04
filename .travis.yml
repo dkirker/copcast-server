@@ -5,7 +5,7 @@ env:
 node_js:
   - "0.10.40"
 before_install:
-  - mv lib/config/template/travisci.json config/travisci.json
+  - mv lib/config/template/development.json config/travisci.json
   - cp config/travisci.json config/common.json
   - npm install -g nodemon
   - npm install
