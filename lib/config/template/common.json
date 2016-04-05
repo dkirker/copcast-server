@@ -7,11 +7,11 @@
   "configured" : false,
   "clientUrl": "http://localhost:3001/",
   "wowza": {
-    "serverIpAddress": "",
-    "streamingPort": 1935,
-    "streamingUser": "",
-    "streamingPassword": "",
-    "streamingPath": ""
+    "ipAddress": "",
+    "port": 1935,
+    "user": "",
+    "password": "",
+    "path": ""
   },
   "email":{
     "from":"Igarape <igarapetech@gmail.com>",
