@@ -1,7 +1,8 @@
 <a href="https://zenhub.io"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
 [![Build Status](https://travis-ci.org/igarape/copcast-server.svg?branch=develop)](https://travis-ci.org/igarape/copcast-server)
-[![Code Climate](https://codeclimate.com/github/igarape/mogi-server/badges/gpa.svg)](https://codeclimate.com/github/igarape/copcast-server)
+<a href="https://codeclimate.com/github/igarape/copcast-server"><img src="https://codeclimate.com/github/igarape/copcast-server/badges/gpa.svg" /></a>
+<a href="https://codeclimate.com/github/igarape/copcast-server/coverage"><img src="https://codeclimate.com/github/igarape/copcast-server/badges/coverage.svg" /></a>
 
 Copcast Server
 ===========
