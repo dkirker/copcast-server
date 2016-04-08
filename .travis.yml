@@ -13,6 +13,7 @@ before_install:
   - mv lib/config/template/test.json config/travisci.json
   - cp config/travisci.json config/common.json
   - cp config/travisci.json config/test.json
+  - npm install -g codeclimate-test-reporter
   - npm install -g nodemon
   - npm install
   - npm install -g grunt-cli
