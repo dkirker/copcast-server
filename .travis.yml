@@ -2,10 +2,12 @@ language: node_js
 env:
   global:
     - NODE_ENV=travisci
+services:
+    - postgresql
 node_js:
   - "0.10.40"
 before_install:
-  - mv lib/config/template/development.json config/travisci.json
+  - mv lib/config/template/test.json config/travisci.json
   - cp config/travisci.json config/common.json
   - cp config/travisci.json config/test.json
   - npm install -g nodemon
