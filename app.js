@@ -17,6 +17,7 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , rabbitmq = require('./lib/rabbitmq')
   , exportUtils = require('./lib/exports/exportUtils.js')
+  //,	streams = require('./lib/streams/streams.js')();
   , crypto = require('./lib/crypto')
   , wss = require('./lib/websocket')
 
@@ -106,5 +107,3 @@ db.sequelize.sync(option).then(function () {
     }
   });
 });
-
-

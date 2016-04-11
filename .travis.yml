@@ -2,26 +2,19 @@ language: node_js
 env:
   global:
     - NODE_ENV=travisci
+services:
+    - postgresql
 node_js:
-  - "0.10"
+  - "0.10.40"
+addons:
+    code_climate:
+        repo_token: f6242bbeff8767328a21dfa96ae3c60ddab0039447aa79666ed176eaf7e3e4af
 before_install:
-  - rm config/development.json
-  - rm config/test.json
-  - cp lib/config/template/travisci.json config/development.json
-  - cp lib/config/template/travisci.json config/test.json
-  - npm install supertest@1.0.1
-  - npm install should@1.2.2
-  - npm install proxyquire@0.5.1
-  - npm install superagent@0.15.4
-  - npm install mocha@2.2.5
-  - npm install grunt@0.4.1
+  - mv lib/config/template/test.json config/travisci.json
+  - cp config/travisci.json config/common.json
+  - cp config/travisci.json config/test.json
+  - npm install -g codeclimate-test-reporter
   - npm install -g nodemon
-  - npm install grunt-contrib-jshint@0.6.0
-  - npm install grunt-contrib-nodeunit@0.2.0
-  - npm install grunt-contrib-uglify@0.2.2
-  - npm install grunt-simple-mocha@0.4.0
-  - npm install grunt-nodemon@0.0.8
-  - npm install grunt-template@0.4.0
   - npm install
   - npm install -g grunt-cli
   - npm cache clean
