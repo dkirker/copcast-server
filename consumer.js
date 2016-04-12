@@ -21,16 +21,16 @@ db.sequelize.sync(option).then(function () {
           q.subscribe({ack: true, prefetchCount: config.parallel_videos}, function (message, headers, deliveryInfo, ack) {
             try{
               console.log('Begining ingestion: '+message.path);
-              storage.ingestVideo(message.path, message.user.id, message.date, function(err, msg) {
-                if (!err)
-                  console.log(msg);
-                else
+              storage.ingestVideo(message.path, message.user.id, message.date, function(code, err) {
+                if (err)
                   console.log(err);
+                else
+                  console.log(message.path+' file ingested.');
 
                 ack.acknowledge();
               });
             } catch(err) {
-              console.log(err);
+              console.log('Error ingesting video: '+err);
             }
           });
         });
