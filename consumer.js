@@ -8,7 +8,6 @@ var db = require('./lib/db')
   , storage = require('./lib/videos/storage')
   , crypto = require('./lib/crypto');
 
-
 var option = {force: false};
 
 db.sequelize.sync(option).then(function () {
@@ -22,6 +21,7 @@ db.sequelize.sync(option).then(function () {
             try{
               console.log('Begining ingestion: '+message.path);
               storage.ingestVideo(message.path, message.user.id, message.date, function(code, err) {
+
                 if (err)
                   console.log(err);
                 else
