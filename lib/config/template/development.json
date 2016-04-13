@@ -14,7 +14,7 @@
     "server": "127.0.0.1",
     "prefetchCount": 4
   },
-  "signatureVerification": false,
+  "signatureVerification": true,
   "googleApiKey": "AIzaSyAs2DppqYg4xyj_Q38oAykxIl2BLwOR8bg",
   "videoStorage": "file",
   "configured": false,
