@@ -359,7 +359,7 @@ CREATE TABLE registrations (
     public_key character varying(1024) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     username character varying(255) NOT NULL,
-    ipaddress character varying(32) NOT NULL
+    ipaddress character varying(48) NOT NULL
 );
 
 
@@ -373,7 +373,7 @@ CREATE TABLE registrations_history (
     public_key character varying(1024) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     username character varying(255) NOT NULL,
-    ipaddress character varying(32) NOT NULL
+    ipaddress character varying(48) NOT NULL
 );
 
 
