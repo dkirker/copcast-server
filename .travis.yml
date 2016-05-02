@@ -2,17 +2,23 @@ language: node_js
 env:
   global:
     - NODE_ENV=travisci
+services:
+    - postgresql
 node_js:
   - "0.10.40"
+addons:
+    code_climate:
+        repo_token: f6242bbeff8767328a21dfa96ae3c60ddab0039447aa79666ed176eaf7e3e4af
 before_install:
-  - mv lib/config/template/development.json config/travisci.json
+  - mv lib/config/template/test.json config/travisci.json
   - cp config/travisci.json config/common.json
+  - cp config/travisci.json config/test.json
+  - npm install -g codeclimate-test-reporter
   - npm install -g nodemon
   - npm install
   - npm install -g grunt-cli
   - npm cache clean
 before_script:
   - psql -c 'create database copcastdb_test;' -U postgres
- # - psql copcastdb_test < copcast-db.sql
 script:
   - "grunt test"
