@@ -52,7 +52,7 @@
     "stream-meter": "^1.0.3",
     "stream-slice": "^0.1.2",
     "temporary": "0.0.8",
-    "ws": "^1.0.1"
+    "ws": "^1.1.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

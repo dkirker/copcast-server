@@ -6,7 +6,9 @@ var express = require('express')
   , http = require('http')
   , app = express()
   , server = http.createServer(app)
-  , io = require('socket.io')(server, {origins: '*:*', 'pingInterval': 2000, 'pingTimeout': 5000})
+  // , io = require('socket.io')(server, {origins: '*:*', 'pingInterval': 2000, 'pingTimeout': 5000})
+  , WebSocketServer = require('ws').Server
+  , wss = new WebSocketServer({ server: server })
   , passport = require('passport')
   , db = require('./lib/db')
   , config = require('./lib/config')
@@ -78,7 +80,7 @@ app.use(require('./lib/exports'));
 streams = require('./lib/streams/streams.js')();
 
 
-require('./lib/streams/socketHandler.js')(io, auth, streams);
+require('./lib/streams/socketHandler.js')(wss, auth);
 
 app.set('sockets', io.sockets);
 app.set('streams', streams);
