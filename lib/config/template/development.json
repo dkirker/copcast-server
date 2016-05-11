@@ -6,7 +6,10 @@
     "partitions": 3,
     "key": "5wyv4fnn2czydg74vgywrm5hbg8s6t",
     "challenge": "Elt/abz0ldFzGwDsQlKmWcZ8+wvEPdOPOIHPhwHtCy4=",
-    "salt": "7892393862398634875689"
+    "salt": "7892393862398634875689",
+    "encryption_algorithm": "aes-256-cbc",
+    "key_length": 256,
+    "key_hash_algorithm": "sha256"
   },
   "securestore": "/tmp",
   "rabbitmq": {
