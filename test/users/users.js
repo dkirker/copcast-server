@@ -6,12 +6,16 @@ var request = require('supertest'),
     users = proxyquire('./../../lib/users', { './../auth' : auth, './../db' : db }),
     http = require('http'),
     server = http.createServer(users),
-    api = request(server);
+    api = request(server),
+    factory = require('./../setup');
 
 describe('Users Tests', function() {
   beforeEach(function(done){
     db.sequelize.sync({force: true}).then(function(err) {
-      done();
+      factory.create('testUser', function(err, post){
+        done();
+      })
+
     });
   });
 
@@ -35,7 +39,7 @@ describe('Users Tests', function() {
         });
     });
 
-     it('should return 200 with json', function(done) {
+    it('should return 200 with json', function(done) {
       api.get('/users/me')
         .expect(200)
         .end(function(err, res) {
@@ -88,22 +92,20 @@ describe('Users Tests', function() {
         email: 'user@email.com',
         name: 'Name',
         role: 'admin_3',
-        isAdmin: req.body.isAdmin,
-        language: req.body.language
+        isAdmin: true,
+        language: 'en'
       };
 
-    beforeEach(function() {
+    beforeEach(function(done) {
       auth.user = user;
       auth.scope = 'client';
 
-      group = db.group.create({
-        name: 'Group',
-        lat: 23,
-        lng: -43,
-        isAdmin: true
+      db.group.findOne().then(function(g){
+        group = g;
+        newUser.groupId = group.id;
+        done();
       });
 
-      newUser.groupId = group.id;
     });
 
     it('should return a 401 error if not logged', function(done){
@@ -121,11 +123,14 @@ describe('Users Tests', function() {
 
     it('should create one user', function(done){
 
-      api.post('/users', newUser )
+      api.post('/users')
+        .send(newUser)
         .expect(200)
         .end(function(err, res) {
-          db.user.exist()
-          done();
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
         });
     });
   });
