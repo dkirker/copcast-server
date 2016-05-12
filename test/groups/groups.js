@@ -4,13 +4,11 @@ var request = require('supertest'),
   proxyquire = require('proxyquire'),
   auth = require('./../mocks/auth'),
   db = require('./../../lib/db'),
-  groups = proxyquire('./../../lib/groups', {'./../auth': auth, './../db': db})
-  , bodyParser = require('body-parser'), factory = require('./../setup');
-
-
+  groups = proxyquire('./../../lib/groups', {'./../auth': auth, './../db': db}),
+  bodyParser = require('body-parser'),
+  factory = require('./../setup');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.use(groups);
 
 describe('Groups Tests', function () {
@@ -89,7 +87,7 @@ describe('Groups Tests', function () {
         .expect(403)
 
         .end(function (err, res) {
-            done();
+          done();
         });
     });
   });

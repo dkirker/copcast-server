@@ -1,13 +1,15 @@
 var request = require('supertest'),
-    should = require('should'),
-    proxyquire =  require('proxyquire'),
-    auth = require('./../mocks/auth'),
-    db = require('./../../lib/db'),
-    users = proxyquire('./../../lib/users', { './../auth' : auth, './../db' : db }),
-    http = require('http'),
-    server = http.createServer(users),
-    api = request(server),
-    factory = require('./../setup');
+  should = require('should'),
+  app = require('express')(),
+  proxyquire = require('proxyquire'),
+  auth = require('./../mocks/auth'),
+  db = require('./../../lib/db'),
+  users = proxyquire('./../../lib/users', {'./../auth': auth, './../db': db}),
+  bodyParser = require('body-parser'), 
+  factory = require('./../setup');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(users);
 
 describe('Users Tests', function() {
   beforeEach(function(done){
@@ -31,7 +33,7 @@ describe('Users Tests', function() {
       auth.user = null;
       auth.scope = null;
 
-      api.get('/users/me')
+      request(app).get('/users/me')
         .expect(401)
         .end(function(err, res) {
           should.not.exist(err);
@@ -40,7 +42,7 @@ describe('Users Tests', function() {
     });
 
     it('should return 200 with json', function(done) {
-      api.get('/users/me')
+      request(app).get('/users/me')
         .expect(200)
         .end(function(err, res) {
           should.not.exist(err);
@@ -63,7 +65,7 @@ describe('Users Tests', function() {
       auth.user = null;
       auth.scope = null;
 
-      api.get('/users/online')
+      request(app).get('/users/online')
         .expect(401)
         .end(function(err, res) {
           should.not.exist(err);
@@ -74,7 +76,7 @@ describe('Users Tests', function() {
 
     it('should return no users', function(done){
 
-      api.get('/users/online')
+      request(app).get('/users/online')
         .expect(200)
         .end(function(err, res) {
           should.not.exist(err);
@@ -112,7 +114,7 @@ describe('Users Tests', function() {
       auth.user = null;
       auth.scope = null;
 
-      api.post('/users')
+      request(app).post('/users')
         .send(newUser)
         .expect(401)
         .end(function(err, res) {
@@ -123,7 +125,7 @@ describe('Users Tests', function() {
 
     it('should create one user', function(done){
 
-      api.post('/users')
+      request(app).post('/users')
         .send(newUser)
         .expect(200)
         .end(function(err, res) {

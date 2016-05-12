@@ -1,12 +1,15 @@
 var request = require('supertest'),
   should = require('should'),
-  proxyquire =  require('proxyquire'),
+  app = require('express')(),
+  proxyquire = require('proxyquire'),
   auth = require('./../mocks/auth'),
   db = require('./../../lib/db'),
-  users = proxyquire('./../../lib/users', { './../auth' : auth, './../db' : db }),
-  http = require('http'),
-  server = http.createServer(users),
-  api = request(server);
+  rest = proxyquire('./../../lib/heartbeats', {'./../auth': auth, './../db': db}),
+  bodyParser = require('body-parser'), 
+  factory = require('./../setup');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(rest);
 
 describe('Heartbeats Tests', function() {
   beforeEach(function(done){
