@@ -5,7 +5,7 @@ var request = require('supertest'),
   auth = require('./../mocks/auth'),
   db = require('./../../lib/db'),
   users = proxyquire('./../../lib/users', {'./../auth': auth, './../db': db}),
-  bodyParser = require('body-parser'), 
+  bodyParser = require('body-parser'),
   factory = require('./../setup');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -14,7 +14,9 @@ app.use(users);
 describe('Users Tests', function() {
   beforeEach(function(done){
     db.sequelize.sync({force: true}).then(function(err) {
-      factory.create('testUser', function(err, post){
+      factory.create('testUser', function(err, u){
+        auth.user = u;
+        auth.scope = 'client';
         done();
       })
 
@@ -22,12 +24,6 @@ describe('Users Tests', function() {
   });
 
   describe('When user is authenticated', function() {
-    var user = { id : 1, username : "test" };
-
-    beforeEach(function() {
-      auth.user = user;
-      auth.scope = 'client';
-    });
 
     it('should return a 401 error if not logged', function(done){
       auth.user = null;
@@ -46,20 +42,14 @@ describe('Users Tests', function() {
         .expect(200)
         .end(function(err, res) {
           should.not.exist(err);
-          res.body.username.should.equal(user.username);
-          res.body.id.should.equal(user.id);
+          res.body.username.should.equal(auth.user.username);
+          res.body.id.should.equal(auth.user.id);
           done();
         });
     });
   });
 
   describe('Users online Endpoint Test', function(){
-    var user = { id : 1, username : "test", role: 'admin_1' };
-
-    beforeEach(function() {
-      auth.user = user;
-      auth.scope = 'client';
-    });
 
     it('should return a 401 error if not logged', function(done){
       auth.user = null;
@@ -88,7 +78,6 @@ describe('Users Tests', function() {
 
   describe('User creation', function(){
     var group = null,
-      user = { id : 1, username : "test", role: 'admin_1' },
       newUser = {
         username: 'username',
         email: 'user@email.com',
@@ -99,9 +88,6 @@ describe('Users Tests', function() {
       };
 
     beforeEach(function(done) {
-      auth.user = user;
-      auth.scope = 'client';
-
       db.group.findOne().then(function(g){
         group = g;
         newUser.groupId = group.id;

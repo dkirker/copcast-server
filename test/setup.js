@@ -4,6 +4,7 @@
 require('factory-girl-sequelize')();
 var factory = require('factory-girl');
 var db = require('./../lib/db');
+var moment = require('moment');
 
 
 //password: test1234
@@ -32,6 +33,25 @@ factory.define('testUser', db.user, {
   passwordHash: passwordHash,
   passwordSalt: passwordSalt,
   groupId: factory.assoc('groupAdmin', 'id')
+});
+
+factory.define('historyRecording', db.history, {
+  previousState : 'IDLE',
+  nextState : 'RECORDING',
+  date : moment.utc().subtract(1, 'week'),
+  userId : factory.assoc('testUser', 'id')
+});
+factory.define('historyStreaming', db.history, {
+  previousState : 'RECORDING',
+  nextState : 'STREAMING',
+  date : moment.utc().subtract(1, 'week'),
+  userId : factory.assoc('testUser', 'id')
+});
+factory.define('historyPaused', db.history, {
+  previousState : 'RECORDING',
+  nextState : 'PAUSED',
+  date : moment.utc().subtract(1, 'week'),
+  userId : factory.assoc('testUser', 'id')
 });
 
 module.exports = factory;
