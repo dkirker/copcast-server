@@ -93,7 +93,7 @@ Finally, you have to create the master user.
 Please access the following url:
 
 ```
-http://<LOCALHOST>:3000
+http://<LOCALHOST>:3000/config
 ```
 
 Remember to change <LOCALHOST> to the actual server address.
@@ -107,3 +107,6 @@ Remember to change <LOCALHOST> to the actual server address.
 ```sh
 NODE_ENV=production node app.js
 ```
+
+## Know issues
+Testing the application with kiosk mode [Mobilock](https://play.google.com/store/apps/details?id=com.promobitech.mobilock), we have experienced situations where the onDestroy() callback is invoked when the icon app is being clicked while the app is already onpened on background.
