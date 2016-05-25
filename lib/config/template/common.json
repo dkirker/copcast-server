@@ -4,6 +4,7 @@
   "db" : "postgres://test:test@localhost:5432/test",
   "googleApiKey" : "AIzaSyBz7uc4_GnOXaef9BIc7PEJmE8lxSQXEH0",
   "videoStorage" : "file",
+  "clientUrl": "http://localhost:3001",
   "configured" : false,
   "email":{
     "from":"Igarape <igarapetech@gmail.com>",

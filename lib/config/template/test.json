@@ -11,13 +11,6 @@
     "challenge": "Elt/abz0ldFzGwDsQlKmWcZ8+wvEPdOPOIHPhwHtCy4=",
     "salt": "7892393862398634875689"
   },
-  "wowza": {
-    "ipAddress": "",
-    "port": 1935,
-    "user": "",
-    "password": "",
-    "path": ""
-  },
   "email":{
     "from":"",
     "service":"",
