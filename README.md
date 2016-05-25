@@ -19,7 +19,7 @@ First, install <a href="https://nodejs.org">Node.js</a> in your development mach
 Then make sure you have the following softwares installed:
 
    * ImageMagick
-   * ffmpeg
+   * ffmpeg 
    * PostgreSQL server and development files
    * gcc, gcc-c++ and make
    * bzip2

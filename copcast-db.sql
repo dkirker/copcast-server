@@ -20,6 +20,9 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET search_path = public, pg_catalog;
 
 --
@@ -89,7 +92,7 @@ CREATE TABLE access_tokens (
     "expirationDate" timestamp with time zone,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
-    "userId" bigint
+    "userId" bigint NOT NULL
 );
 
 
@@ -99,12 +102,12 @@ CREATE TABLE access_tokens (
 
 CREATE TABLE batteries (
     id integer NOT NULL,
-    date timestamp with time zone,
-    "batteryPercentage" double precision,
-    "batteryHealth" integer,
+    date timestamp with time zone NOT NULL,
+    "batteryPercentage" double precision NOT NULL,
+    "batteryHealth" integer NOT NULL,
     plugged integer,
     temperature integer,
-    "userId" bigint
+    "userId" bigint NOT NULL
 );
 
 
@@ -133,10 +136,10 @@ ALTER SEQUENCE batteries_id_seq OWNED BY batteries.id;
 
 CREATE TABLE exports (
     id integer NOT NULL,
-    "exporterId" integer,
-    "recorderId" integer,
-    "initialDate" timestamp with time zone,
-    "finalDate" timestamp with time zone,
+    "exporterId" integer NOT NULL,
+    "recorderId" integer NOT NULL,
+    "initialDate" timestamp with time zone NOT NULL,
+    "finalDate" timestamp with time zone NOT NULL,
     "expireDate" timestamp with time zone,
     status character varying(255),
     filepath character varying(255),
@@ -238,7 +241,6 @@ ALTER SEQUENCE histories_id_seq OWNED BY histories.id;
 
 CREATE TABLE "incidentForms" (
     id integer NOT NULL,
-    "userId" bigint,
     date timestamp with time zone,
     address character varying(255),
     lat double precision,
@@ -253,8 +255,9 @@ CREATE TABLE "incidentForms" (
     argument boolean,
     "useOfForce" boolean,
     "useLethalForce" boolean,
-    "createdAt" timestamp with time zone,
-    "updatedAt" timestamp with time zone
+    "userId" bigint NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
 );
 
 
@@ -283,10 +286,10 @@ ALTER SEQUENCE "incidentForms_id_seq" OWNED BY "incidentForms".id;
 
 CREATE TABLE incidents (
     id integer NOT NULL,
-    date timestamp with time zone,
-    lat double precision,
-    lng double precision,
-    "userId" bigint
+    date timestamp with time zone NOT NULL,
+    "userId" bigint NOT NULL,
+    lat double precision NOT NULL,
+    lng double precision NOT NULL
 );
 
 
@@ -318,7 +321,7 @@ CREATE TABLE locations (
     date timestamp with time zone NOT NULL,
     lat double precision NOT NULL,
     lng double precision NOT NULL,
-    "userId" bigint,
+    "userId" bigint NOT NULL,
     accuracy double precision,
     satellites integer,
     provider character varying(255),
@@ -356,7 +359,7 @@ CREATE TABLE registrations (
     public_key character varying(1024) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     username character varying(255) NOT NULL,
-    ipaddress character varying(16) NOT NULL
+    ipaddress character varying(48) NOT NULL
 );
 
 
@@ -370,7 +373,7 @@ CREATE TABLE registrations_history (
     public_key character varying(1024) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     username character varying(255) NOT NULL,
-    ipaddress character varying(16) NOT NULL
+    ipaddress character varying(48) NOT NULL
 );
 
 
@@ -395,9 +398,9 @@ CREATE TABLE users (
     "groupId" integer,
     "profilePicture" character varying(255),
     language character varying(5),
-    role character varying(20),
     "rememberToken" character varying(255),
-    "isEnabled" boolean DEFAULT true
+    "isEnabled" boolean DEFAULT true,
+    role character varying(20)
 );
 
 
@@ -428,7 +431,7 @@ CREATE TABLE videos (
     id uuid NOT NULL,
     date timestamp with time zone NOT NULL,
     duration integer NOT NULL,
-    "userId" integer,
+    "userId" bigint NOT NULL,
     "isValid" boolean,
     filesize integer NOT NULL
 );
@@ -519,6 +522,15 @@ ALTER TABLE ONLY "SequelizeMeta"
 
 ALTER TABLE ONLY access_tokens
     ADD CONSTRAINT access_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2830 (class 2606 OID 16470)
+-- Name: batteries_date_userId_key; Type: CONSTRAINT; Schema: public; Owner: test; Tablespace:
+--
+
+ALTER TABLE ONLY batteries
+    ADD CONSTRAINT "batteries_date_userId_key" UNIQUE (date, "userId");
 
 
 --
@@ -626,6 +638,42 @@ ALTER TABLE ONLY videos
 
 
 --
+-- TOC entry 2839 (class 2606 OID 16471)
+-- Name: batteries_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: test
+--
+
+ALTER TABLE ONLY batteries
+    ADD CONSTRAINT "batteries_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2840 (class 2606 OID 16487)
+-- Name: exports_exporterId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: test
+--
+
+ALTER TABLE ONLY exports
+    ADD CONSTRAINT "exports_exporterId_fkey" FOREIGN KEY ("exporterId") REFERENCES users(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2841 (class 2606 OID 16492)
+-- Name: exports_recorderId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: test
+--
+
+ALTER TABLE ONLY exports
+    ADD CONSTRAINT "exports_recorderId_fkey" FOREIGN KEY ("recorderId") REFERENCES users(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2843 (class 2606 OID 16521)
+-- Name: incidentForms_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: test
+--
+
+ALTER TABLE ONLY "incidentForms"
+    ADD CONSTRAINT "incidentForms_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON UPDATE CASCADE;
+
+
+--
 -- Name: registration_trigger; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -637,7 +685,7 @@ CREATE TRIGGER registration_trigger AFTER INSERT OR UPDATE ON registrations FOR 
 --
 
 ALTER TABLE ONLY incidents
-    ADD CONSTRAINT "incidents_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id);
+    ADD CONSTRAINT "incidents_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON UPDATE CASCADE;
 
 
 --

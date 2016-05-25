@@ -1,6 +1,5 @@
 'use strict';
 var copcast_db_user = require('../lib/db').sequelize.config.username;
-var copcast_db_pass = require('../lib/db').sequelize.config.password;
 
 module.exports = {
   up: function (queryInterface, Sequelize, done) {
