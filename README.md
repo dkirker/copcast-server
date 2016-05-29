@@ -93,7 +93,7 @@ Finally, you have to create the master user.
 Please access the following url:
 
 ```
-http://<LOCALHOST>:3000
+http://<LOCALHOST>:3000/config
 ```
 
 Remember to change <LOCALHOST> to the actual server address.
