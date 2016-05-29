@@ -60,7 +60,6 @@ var auth = require('./lib/auth');
 app.post('/token', auth.tokenEndpoint);
 app.use(require('./lib/config/wizard'));
 app.use(require('./lib/users'));
-app.use(require('./lib/streams'));
 app.use(require('./lib/videos'));
 app.use(require('./lib/locations'));
 app.use(require('./lib/histories'));
