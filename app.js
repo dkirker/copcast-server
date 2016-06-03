@@ -19,7 +19,7 @@ var express = require('express')
   , exportUtils = require('./lib/exports/exportUtils.js')
   //,	streams = require('./lib/streams/streams.js')();
   , crypto = require('./lib/crypto')
-  , wss = require('./lib/websocket')
+  , wss = require('./lib/websocket');
 
 
 // Express configuration
@@ -57,8 +57,11 @@ if ('development' == app.get('env')) {
 // Passport configuration
 var auth = require('./lib/auth');
 
+app.use('/images', express.static(__dirname + '/images'));
+
 app.post('/token', auth.tokenEndpoint);
 app.use(require('./lib/config/wizard'));
+app.use(require('./lib/home'));
 app.use(require('./lib/users'));
 app.use(require('./lib/videos'));
 app.use(require('./lib/locations'));
@@ -68,7 +71,7 @@ app.use(require('./lib/reports'));
 app.use(require('./lib/groups'));
 app.use(require('./lib/heartbeats'));
 app.use(require('./lib/batteries'));
-app.use(require('./lib/incidentForms'))
+app.use(require('./lib/incidentForms'));
 app.use(require('./lib/pictures'));
 app.use(require('./lib/logreports'));
 app.use(require('./lib/registrations'));
