@@ -17,7 +17,7 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , rabbitmq = require('./lib/rabbitmq')
   , exportUtils = require('./lib/exports/exportUtils.js')
-  //,	streams = require('./lib/streams/streams.js')();
+  , videoJobs = require('./lib/videos/jobs')
   , crypto = require('./lib/crypto')
   , wss = require('./lib/websocket');
 
@@ -91,6 +91,7 @@ var init_server = function() {
   server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
     exportUtils.loadExpireJobs();
+    videoJobs.loadDeleteOldVideosJob();
   });
 }
 
