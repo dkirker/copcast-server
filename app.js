@@ -18,8 +18,7 @@ var express = require('express')
   , rabbitmq = require('./lib/rabbitmq')
   , exportUtils = require('./lib/exports/exportUtils.js')
   , videoJobs = require('./lib/videos/jobs')
-  , crypto = require('./lib/crypto')
-  , wss = require('./lib/websocket');
+  , crypto = require('./lib/crypto');
 
 
 // Express configuration
