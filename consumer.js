@@ -17,7 +17,7 @@ db.sequelize.sync(option).then(function () {
         console.log('Queue ' + q.name + ' is open');
         q.bind(rabbitmq.exchange(), 'copcast-k', function() {
           console.log('Consumer ready. Maximum parallel executions: '+config.rabbitmq.prefetchCount);
-          q.subscribe({ack: true, prefetchCount: config.parallel_videos}, function (message, headers, deliveryInfo, ack) {
+          q.subscribe({ack: true, prefetchCount: config.rabbitmq.prefetchCount}, function (message, headers, deliveryInfo, ack) {
             try{
               console.log('Begining ingestion: '+message.path);
               storage.ingestVideo(message.path, message.user.id, message.date, function(code, err) {
