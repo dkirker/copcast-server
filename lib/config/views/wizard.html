@@ -107,7 +107,7 @@
         admin : $scope.admin
       }).success(function(data) {
         $scope.configured = true;
-      }).error(function(err) {
+      }).catch(function(err) {
         $scope.errorMessage = err.message;
       });
     };
