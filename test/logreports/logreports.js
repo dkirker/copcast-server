@@ -117,7 +117,7 @@ describe('Audit Report Tests', function() {
     });
     it('invalid dates',function(done){
       request(app)
-        .get('/logreports/diushadiusahdiusa/diusahdisahudiusah')
+        .get('/logreports/9999-99-99/9999-99-99')
         .expect(400)
         .end(function(err, res) {
           should.not.exist(err);
