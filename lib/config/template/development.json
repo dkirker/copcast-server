@@ -22,6 +22,7 @@
   "videoStorage": "file",
   "configured": false,
   "hasVideoPlayback": false,
+  "showFeedback": false,
   "periodOfRetention": 90,
   "email": {
     "administrator": "bruno@igarape.org.br",
