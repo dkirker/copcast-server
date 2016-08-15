@@ -46,6 +46,8 @@ module.exports = {
             }
             counter();
           }.bind(history));
+        } else {
+          counter();
         }
       }
     });
