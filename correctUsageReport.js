@@ -4,17 +4,21 @@
 var
   db = require('./lib/db'),
   storage = require('./lib/videos/storage'),
-  moment = require('moment');
+  moment = require('moment'),
+  _ = require('lodash');
 
 module.exports = {
-  updateHistoryRecording: function(){
-    db.sequelize.query('select * from histories h ' +
-      ' where "nextState" = \'RECORDING\' AND ' +
-      ' NOT EXISTS ( ' +
-      '  select * from histories h1 where to_char(h1.date, \'DD/MM/YYYY\') =  to_char(h.date, \'DD/MM/YYYY\') AND "previousState" = \'RECORDING\' )',
+  updateHistoryRecording: function(callback){
+    db.sequelize.query(' select * from histories h where  NOT EXISTS (select * ' +
+      ' from histories h1 where to_char(h1.date, \'DD/MM/YYYY\') =  to_char(h.date, \'DD/MM/YYYY\') '+
+      ' AND h1."previousState" = \'RECORDING\' AND h."userId" = h1."userId") and h."nextState" = \'RECORDING\'',
       {type: db.sequelize.QueryTypes.SELECT}).then(function (histories) {
       var date = null, userId = null;
-
+      console.log('histories', histories);
+      if (histories.length == 0){
+        return callback();
+      }
+      var counter = _.after(histories.length, callback);
       for (var i = 0; i < histories.length; i++) {
         var history = histories[i];
         if (!userId || (userId != history.userId || !date.isSame(moment(history.date), 'day'))) {
@@ -31,13 +35,16 @@ module.exports = {
               },
               type: db.sequelize.QueryTypes.SELECT
             }).then(function (result) {
-
-            var newHistory = db.history.build({
-              date: moment(this.date).add(parseInt(result[0].sum), 'seconds').toDate(),
-              previousState: 'RECORDING', nextState: 'IDLE', userId: this.userId
-            });
-            console.log(newHistory);
-            newHistory.save();
+              console.log("result", result);
+            if (parseInt(result[0].sum)>0) {
+              var newHistory = db.history.build({
+                date: moment(this.date).add(parseInt(result[0].sum), 'seconds').toDate(),
+                previousState: 'RECORDING', nextState: 'IDLE', userId: this.userId
+              });
+              console.log(newHistory);
+              newHistory.save();
+            }
+            counter();
           }.bind(history));
         }
       }
