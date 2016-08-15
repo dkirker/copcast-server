@@ -1,8 +1,8 @@
 'use strict';
 var usageScript = require('../correctUsageReport');
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-    usageScript.updateHistoryRecording();
+  up: function (queryInterface, Sequelize, done) {
+    usageScript.updateHistoryRecording(done);
   },
 
   down: function (queryInterface, Sequelize) {
