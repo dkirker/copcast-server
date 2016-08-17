@@ -53,6 +53,15 @@ describe('Users Tests', function () {
           done();
         });
     });
+    it('wildcard in name', function (done) {
+      request(app).post('/token')
+        .send({username: 'T%r', password: 'test1234', scope: 'client'})
+        .expect(401)
+        .end(function (err, res) {
+          should.not.exist(err);
+          done();
+        });
+    });
   });
 });
 
