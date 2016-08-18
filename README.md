@@ -11,6 +11,7 @@ Copcast Server is part of the Copcast solution to help improve police accountabi
 
 Copcast Server is a server API developed with <a href="https://nodejs.org">Node.js</a> and <a href="http://expressjs.com">Express</a>
 
+You can check our general requirements <a href="https://github.com/igarape/copcast-server/wiki/Configuration-Requirements">here</a>.
 
 ## Dev Installation
 
@@ -18,7 +19,6 @@ First, install <a href="https://nodejs.org">Node.js</a> in your development mach
 
 Then make sure you have the following softwares installed:
 
-   * ImageMagick
    * ffmpeg 
    * PostgreSQL server and development files
    * gcc, gcc-c++ and make
