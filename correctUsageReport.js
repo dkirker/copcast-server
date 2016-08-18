@@ -42,7 +42,11 @@ module.exports = {
                 previousState: 'RECORDING', nextState: 'IDLE', userId: this.userId
               });
               console.log(newHistory);
-              newHistory.save();
+              newHistory.save().then(function () {
+                counter();
+              }).catch(function (err) {
+                callback(err);
+              });
             }
             counter();
           }.bind(history));
