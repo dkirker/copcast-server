@@ -5,7 +5,7 @@ env:
 services:
     - postgresql
 node_js:
-  - "0.10.40"
+  - "4.4.7"
 addons:
     code_climate:
         repo_token: f6242bbeff8767328a21dfa96ae3c60ddab0039447aa79666ed176eaf7e3e4af
