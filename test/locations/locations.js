@@ -14,10 +14,9 @@ app.use(rest);
 
 auth.scope = 'client'; //set mock user scope
 
-config.signatureVerification = false;
-
 describe('Bulk location upload', function() {
   beforeEach(function (done) {
+    config.signatureVerification = false;
     db.sequelize.sync({force: true}).then(function (err) {
       factory.create('testUser', function (err, u) {
         if (err) {
