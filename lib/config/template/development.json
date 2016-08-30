@@ -9,7 +9,7 @@
     "salt": "7892393862398634875689",
     "encryption_algorithm": "aes-256-cbc",
     "key_length": 256,
-    "key_hash_algorithm": "sha256"
+    "key_hash_algorithm": "sha1"
   },
   "securestore": "/tmp",
   "rabbitmq": {

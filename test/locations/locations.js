@@ -4,7 +4,7 @@ var request = require('supertest'),
   proxyquire = require('proxyquire'),
   auth = require('./../mocks/auth'),
   db = require('./../../lib/db'),
-  rest = proxyquire('./../../lib/batteries', {'./../auth': auth, './../db': db}),
+  rest = proxyquire('./../../lib/locations', {'./../auth': auth, './../db': db}),
   bodyParser = require('body-parser'),
   config = require('./../../lib/config'),
   factory = require('./../setup');
@@ -14,7 +14,7 @@ app.use(rest);
 
 auth.scope = 'client'; //set mock user scope
 
-describe('Bulk battery upload', function() {
+describe('Bulk location upload', function() {
   beforeEach(function (done) {
     config.signatureVerification = false;
     db.sequelize.sync({force: true}).then(function (err) {
@@ -32,8 +32,8 @@ describe('Bulk battery upload', function() {
 
   describe('',function(){
     it('will upload one item', function (done) {
-      request(app).post('/batteries/testuser')
-        .send({"bulk": [{"batteryHealth":100, "batteryPercentage": 100.0, "temperature": 97, "status": 100, "plugged": 1, "date": "2016-08-19T23:11:15.123Z"}]})
+      request(app).post('/locations/testuser')
+        .send({"bulk": [{"lat":72.1, "lng": 42.1, "date": "2016-08-19T23:11:15.123Z"}]})
         .expect(201)
         .end(function (err, res) { should.not.exist(err); done(); });
     });
@@ -41,7 +41,7 @@ describe('Bulk battery upload', function() {
 
   describe('',function(){
     it('will upload one fake array like', function (done) {
-      request(app).post('/batteries/testuser')
+      request(app).post('/locations/testuser')
         .send({"bulk": {"length" : 10}})
         .expect(400)
         .end(function (err, res) { should.not.exist(err); done(); });
@@ -50,8 +50,8 @@ describe('Bulk battery upload', function() {
 
   describe('',function(){
     it('will upload one malicious json', function (done) {
-      request(app).post('/batteries/testuser')
-        .send({"bulk": [{"batteryHealth": {"$iLike": "%"}}]})
+      request(app).post('/locations/testuser')
+        .send({"bulk": [{"provider": {"$iLike": "%"}}]})
         .expect(400)
         .end(function (err, res) { should.not.exist(err); done(); });
     });

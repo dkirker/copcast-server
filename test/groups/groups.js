@@ -50,6 +50,7 @@ describe('Groups Tests', function () {
         .type('json')
         .expect(200)
         .end(function (err, res) {
+          should.not.exist(err);
           done()
         });
     });
@@ -57,8 +58,49 @@ describe('Groups Tests', function () {
       request(app).post('/groups')
         .type('form')
         .send({})
-        .expect(403)
+        .expect(400)
         .end(function (err, res) {
+          should.not.exist(err);
+          done();
+        });
+    });
+    it('fails with object for name', function (done) {
+      request(app).post('/groups')
+        .type('form')
+        .send({name: {"$iLike": "%"}})
+        .expect(400)
+        .end(function (err, res) {
+          should.not.exist(err);
+          done();
+        });
+    });
+    it('fails with bad lat', function (done) {
+      request(app).post('/groups')
+        .type('form')
+        .send({name: "Test group", lat: "inf"})
+        .expect(400)
+        .end(function (err, res) {
+          should.not.exist(err);
+          done();
+        });
+    });
+    it('fails with bad lng', function (done) {
+      request(app).post('/groups')
+        .type('form')
+        .send({name: "Test group", lng: "inf"})
+        .expect(400)
+        .end(function (err, res) {
+          should.not.exist(err);
+          done();
+        });
+    });
+    it('fails with bad isAdmin', function (done) {
+      request(app).post('/groups')
+        .type('form')
+        .send({name: "Test group", isAdmin: "true"})
+        .expect(400)
+        .end(function (err, res) {
+          should.not.exist(err);
           done();
         });
     });
