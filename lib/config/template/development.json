@@ -30,5 +30,6 @@
     "service": "Gmail",
     "user": "CopcastServer@gmail.com",
     "pass": "hqhsaszvodjnobtm"
-  }
+  },
+  "debugMode": false
 }
