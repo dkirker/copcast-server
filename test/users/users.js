@@ -80,6 +80,7 @@ describe('Users Tests', function() {
     var group = null,
       newUser = {
         username: 'username',
+        password: 'mypassword',
         email: 'user@email.com',
         name: 'Name',
         role: 'admin_3',
@@ -104,17 +105,123 @@ describe('Users Tests', function() {
         .send(newUser)
         .expect(401)
         .end(function(err, res) {
+          should.not.exist(err);
           done();
         });
     });
 
 
     it('should create one user', function(done){
-
       request(app).post('/users')
         .send(newUser)
-        .expect(200)
+        .expect(202)
         .end(function(err, res) {
+          should.not.exist(err);
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
+        });
+    });
+
+    it('should fail to create one user with bad username', function(done){
+      var brokenUser = JSON.parse(JSON.stringify(newUser));
+      brokenUser.username = {"$iLike": "%"};
+      request(app).post('/users')
+        .send(brokenUser)
+        .expect(400)
+        .end(function(err, res) {
+          should.not.exist(err);
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
+        });
+    });
+
+    it('should fail to create one user with bad password', function(done){
+      var brokenUser = JSON.parse(JSON.stringify(newUser));
+      brokenUser.password = {"$iLike": "%"};
+      request(app).post('/users')
+        .send(brokenUser)
+        .expect(400)
+        .end(function(err, res) {
+          should.not.exist(err);
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
+        });
+    });
+
+    it('should fail to create one user with bad email', function(done){
+      var brokenUser = JSON.parse(JSON.stringify(newUser));
+      brokenUser.email = {"$iLike": "%"};
+      request(app).post('/users')
+        .send(brokenUser)
+        .expect(400)
+        .end(function(err, res) {
+          should.not.exist(err);
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
+        });
+    });
+
+    it('should fail to create one user with bad name', function(done){
+      var brokenUser = JSON.parse(JSON.stringify(newUser));
+      brokenUser.name = {"$iLike": "%"};
+      request(app).post('/users')
+        .send(brokenUser)
+        .expect(400)
+        .end(function(err, res) {
+          should.not.exist(err);
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
+        });
+    });
+
+    it('should fail to create one user with bad role', function(done){
+      var brokenUser = JSON.parse(JSON.stringify(newUser));
+      brokenUser.role = {"$iLike": "%"};
+      request(app).post('/users')
+        .send(brokenUser)
+        .expect(400)
+        .end(function(err, res) {
+          should.not.exist(err);
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
+        });
+    });
+
+    it('should fail to create one user with bad isAdmin', function(done){
+      var brokenUser = JSON.parse(JSON.stringify(newUser));
+      brokenUser.isAdmin = {"$iLike": "%"};
+      request(app).post('/users')
+        .send(brokenUser)
+        .expect(400)
+        .end(function(err, res) {
+          should.not.exist(err);
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
+        });
+    });
+
+    it('should fail to create one user with bad language', function(done){
+      var brokenUser = JSON.parse(JSON.stringify(newUser));
+      brokenUser.language = {"$iLike": "%"};
+      request(app).post('/users')
+        .send(brokenUser)
+        .expect(400)
+        .end(function(err, res) {
+          should.not.exist(err);
           db.user.findOne({username: newUser.username}).then(function(user){
             should.exist(user);
             done();
