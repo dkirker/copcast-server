@@ -10,7 +10,7 @@ crypt.challenge(function (key, salt, partitions, challenge, encalgo, kl, hashalg
     '  "challenge": "' + challenge + '",\n' +
     '  "salt": "' + salt + '",\n' +
     '  "encryption_algorithm": "' + encalgo + '",\n' +
-    '  "key_length": "' + kl + '",\n' +
+    '  "key_length": ' + kl + ',\n' +
     '  "key_hash_algorithm": "' + hashalgo + '"\n' +
     '},\n'
   );
