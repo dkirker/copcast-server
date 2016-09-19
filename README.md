@@ -107,3 +107,7 @@ Remember to change <LOCALHOST> to the actual server address.
 ```sh
 NODE_ENV=production node app.js
 ```
+
+## Production Installation
+
+Check our [production installation page](https://github.com/igarape/copcast-server/wiki/Production-Installation)
