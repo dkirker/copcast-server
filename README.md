@@ -107,6 +107,9 @@ Remember to change <LOCALHOST> to the actual server address.
 ```sh
 NODE_ENV=production node app.js
 ```
+## HTTPS Pinning
+
+This note is applicable if server is configured to use HTTPS. For security, CopCast Android app checks for https certificates from server and display error message if https pinning failed. For proper functioning of android app, please include intermediate CA and root CA certificates used for signing server's certificate in assets folder of android app.
 
 ## Production Installation
 
