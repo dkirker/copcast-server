@@ -83,8 +83,6 @@ describe('Users Tests', function() {
         password: 'mypassword',
         email: 'user@email.com',
         name: 'Name',
-        role: 'admin_3',
-        isAdmin: true,
         language: 'en'
       };
 
@@ -111,9 +109,25 @@ describe('Users Tests', function() {
     });
 
 
-    it('should create one user', function(done){
+    it('should create one user without role', function(done){
       request(app).post('/users')
         .send(newUser)
+        .expect(202)
+        .end(function(err, res) {
+          should.not.exist(err);
+          db.user.findOne({username: newUser.username}).then(function(user){
+            should.exist(user);
+            done();
+          })
+        });
+    });
+
+    it('should create one user with role', function(done){
+      var userWithRole = JSON.parse(JSON.stringify(newUser));
+      userWithRole.role = 'admin_3';
+      userWithRole.isAdmin = true;
+      request(app).post('/users')
+        .send(userWithRole)
         .expect(202)
         .end(function(err, res) {
           should.not.exist(err);
