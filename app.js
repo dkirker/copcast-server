@@ -38,10 +38,14 @@ var allowCrossDomain = function (req, res, next) {
   }
 };
 
-if (process.env.PORT == null) {
-  console.warn('process.env.PORT is null!');
-}
-app.set('port', process.env.PORT || 3000);
+console.log("Starting copcast-server v");
+
+console.log("Setup Express...");
+//if (process.env.PORT == null) {
+//  console.warn('process.env.PORT is null!');
+//}
+app.set('port', config.port);
+app.set('address', config.address);
 app.use(logger('dev'));
 app.use(allowCrossDomain);
 app.use(cookieParser());
@@ -49,12 +53,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride());
 app.use(passport.initialize());
-if ('development' == app.get('env')) {
+//if ('development' == app.get('env')) {
   app.use(errorHandler({dumpExceptions: true, showStack: true}));
-}
+//}
 
 // Passport configuration
 var auth = require('./lib/auth');
+
+console.log("Setup Express routes...");
 
 app.use('/images', express.static(__dirname + '/images'));
 
@@ -75,6 +81,8 @@ app.use(require('./lib/logreports'));
 app.use(require('./lib/registrations'));
 app.use(require('./lib/exports'));
 
+console.log("Setup socket.io...");
+
 streams = require('./lib/streams/streams.js')();
 
 
@@ -86,17 +94,19 @@ app.set('streams', streams);
 var option = {force: false};
 
 var init_server = function() {
-  server.listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
+  server.listen(app.get('port'), app.get('address'), function () {
+    console.log('Express server listening at address ' + app.get('address') + ' on port ' + app.get('port'));
     exportUtils.loadExpireJobs();
     videoJobs.loadDeleteOldVideosJob();
   });
 }
 
+console.log("Setup db...");
+
 db.sequelize.sync(option).then(function () {
-
+console.log("sequelize sync");
   crypto.crypto_init(function () {
-
+console.log("crypto_init");
     if ('rabbitmq' in config && config.rabbitmq.enabled) {
 
       rabbitmq.init(function () {

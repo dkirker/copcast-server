@@ -6,7 +6,7 @@ var crypto = require('./lib/crypto'),
 
 var run = function() {
 
-  glob("/Users/martelli/tmp/*.enc", {}, function (er, files) {
+  glob("videos/3/*.enc", {}, function (er, files) {
 
     if (er)
       console.log(er);
