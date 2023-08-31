@@ -9,10 +9,14 @@
   "clientUrl": "http://localhost:3001",
   "configured" : false,
   "email":{
-    "from":"Igarape <igarapetech@gmail.com>",
+    "from":"mailer@mydomain.com",
     "subject":"New Password",
-    "service":"Gmail",
-    "user": "CopcastServer@gmail.com",
-    "pass": "hqhsaszvodjnobtm"
+    "service":"smtp",
+    "host": "mailhost.mydomain.com",
+    "port": 587,
+    "startTls": true,
+    "authMethod": "LOGIN",
+    "user": "CopcastServer@mydomain.com",
+    "pass": "test"
   }
 }

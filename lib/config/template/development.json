@@ -45,6 +45,10 @@
     "administrator": "",
     "from": "mailer@mydomain.com",
     "service": "smtp",
+    "host": "mailhost.mydomain.com",
+    "port": 587,
+    "startTls": true,
+    "authMethod": "LOGIN",
     "user": "mailer@mydomain.com",
     "pass": "test"
   },

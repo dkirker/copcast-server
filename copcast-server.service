@@ -1,0 +1,16 @@
+[Unit]
+Description=copcast-server
+After=syslog.target network.target nss-lookup.target network-online.target
+Requires=network-online.target
+
+[Service]
+User=copcast
+Group=copcast
+WorkingDirectory=/opt/copcast/services/copcast-server/
+ExecStart=/bin/bash -- run.sh
+RestartSec=5
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
